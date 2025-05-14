@@ -37,6 +37,24 @@ document.addEventListener("DOMContentLoaded", async function () {
   
 
 
+  // 4. Load Pyodide and External Python Code
+  async function loadPyodideAndPythonScripts() {
+    window.pyodide = await loadPyodide();
+  // Load multiple Python scripts
+    const pythonScripts = ["sell_price_calculator.py", "fence_cost_calculator.py"];
+    for (const script of pythonScripts) {
+      const response = await fetch(script);
+      if (!response.ok) {
+        throw new Error(`Failed to load ${script}`);
+      }
+      const scriptText = await response.text();
+      await pyodide.runPythonAsync(scriptText);
+    }
+  }
+  await loadPyodideAndPythonScripts();
+
+  
+
   // Add a new tab for Fence Calculator
   let fenceNavItem = document.createElement("li");
   let fenceNavLink = document.createElement("a");
@@ -271,20 +289,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 
-
   
-  // 4. Load Pyodide and External Python Code
-  async function loadPyodideAndPythonScripts() {
-    window.pyodide = await loadPyodide();
-    const response = await fetch("sell_price_calculator.py");
-    if (!response.ok) {
-      throw new Error("Failed to load sell_price_calculator.py");
-    }
-    const scriptText = await response.text();
-    await pyodide.runPythonAsync(scriptText);
-  }
-  await loadPyodideAndPythonScripts();
-
   // 5. Execute the Python Calculation
   async function runPython() {
     let num1 = Number(document.getElementById("num1").value);
