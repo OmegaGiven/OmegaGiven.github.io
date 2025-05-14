@@ -3,17 +3,19 @@ document.addEventListener("DOMContentLoaded", async function() {
 
     let title = document.createElement("h1");
     title.innerText = "Home Selling Price Calculator";
+    title.className = "app-title";
     app.appendChild(title);
 
     let description = document.createElement("p");
     description.innerText = "Enter values below to estimate the selling price.";
+    description.className = "app-description";
     app.appendChild(description);
 
     let formContainer = document.createElement("div");
     formContainer.setAttribute("id", "form-container");
     app.appendChild(formContainer);
 
-    // Resize for mobile dynamically
+    // Adjust layout based on screen width
     function adjustLayout() {
         if (window.innerWidth < 600) {
             formContainer.style.flexDirection = "column";
@@ -22,7 +24,6 @@ document.addEventListener("DOMContentLoaded", async function() {
             formContainer.style.flexDirection = "row";
         }
     }
-
     window.addEventListener("resize", adjustLayout);
     adjustLayout();  // Run once on page load
 
@@ -36,11 +37,13 @@ document.addEventListener("DOMContentLoaded", async function() {
     fields.forEach(field => {
         let label = document.createElement("label");
         label.innerText = field.label;
+        label.className = "field-label";
 
         let input = document.createElement("input");
         input.setAttribute("type", "number");
         input.setAttribute("id", field.id);
         input.setAttribute("placeholder", field.placeholder);
+        input.className = "field-input";
 
         formContainer.appendChild(label);
         formContainer.appendChild(input);
@@ -48,19 +51,18 @@ document.addEventListener("DOMContentLoaded", async function() {
 
     let button = document.createElement("button");
     button.innerText = "Calculate";
+    button.className = "calculate-button";
     button.addEventListener("click", runPython);
     formContainer.appendChild(button);
 
     let resultContainer = document.createElement("div");
     resultContainer.innerHTML = "<h2>Estimated Selling Price</h2><p>Result: <span id='result'></span></p>";
+    resultContainer.className = "result-container";
     app.appendChild(resultContainer);
 
-    // Load Pyodide
+    // Load Pyodide and external Python file
     async function loadPyodideAndPythonScripts() {
         window.pyodide = await loadPyodide();
-
-        // Load external Python file(s). 
-        // If you have multiple Python files, you can fetch each one.
         const response = await fetch('sell_price_calculator.py');
         if (!response.ok) {
             throw new Error("Failed to load sell_price_calculator.py");
@@ -70,18 +72,12 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
     await loadPyodideAndPythonScripts();
 
-    // Run the Python function using values from your form
+    // Run the Python function using values from the form
     async function runPython() {
-        let num1 = document.getElementById("num1").value;
-        let num2 = document.getElementById("num2").value;
-        let num3 = document.getElementById("num3").value;
+        let num1 = Number(document.getElementById("num1").value);
+        let num2 = Number(document.getElementById("num2").value);
+        let num3 = Number(document.getElementById("num3").value);
 
-        // Ensure that values are properly converted to numbers if necessary:
-        num1 = Number(num1);
-        num2 = Number(num2);
-        num3 = Number(num3);
-        
-        // Call the Python function defined in the external file
         const pythonCommand = `calculate_sell_price(${num1}, ${num2}, ${num3})`;
         const result = await pyodide.runPythonAsync(pythonCommand);
         document.getElementById("result").innerText = result;
