@@ -37,6 +37,110 @@ document.addEventListener("DOMContentLoaded", async function () {
   
 
 
+ // Add a new tab for Fence Calculator
+  let fenceNavItem = document.createElement("li");
+  let fenceNavLink = document.createElement("a");
+  fenceNavLink.href = "#fence-calc-tab";
+  fenceNavLink.innerText = "Fence Cost Calculator";
+  fenceNavItem.appendChild(fenceNavLink);
+  navList.appendChild(fenceNavItem);
+
+  // Create the Fence Calculator Content
+  let fenceCalcTab = document.createElement("div");
+  fenceCalcTab.id = "fence-calc-tab";
+  fenceCalcTab.style.display = "none"; // Initially hidden
+
+  // Fence Calculator Form
+  let fenceFormContainer = document.createElement("div");
+
+  const fenceFields = [
+    {
+      id: "fence-height",
+      label: "Height of Fence (ft):",
+      placeholder: "Enter height",
+    },
+    {
+      id: "fence-length",
+      label: "Length of Fence (ft):",
+      placeholder: "Enter length",
+    },
+    {
+      id: "fence-sides",
+      label: "Number of Sides (1 or 2):",
+      placeholder: "Enter 1 or 2",
+    },
+  ];
+
+  fenceFields.forEach(field => {
+    let fieldContainer = document.createElement("div");
+    fieldContainer.className = "field-container";
+
+    let label = document.createElement("label");
+    label.innerText = field.label;
+
+    let input = document.createElement("input");
+    input.type = "number";
+    input.id = field.id;
+    input.placeholder = field.placeholder;
+
+    fieldContainer.appendChild(label);
+    fieldContainer.appendChild(input);
+    fenceFormContainer.appendChild(fieldContainer);
+  });
+
+  fenceCalcTab.appendChild(fenceFormContainer);
+
+  // Calculate Button
+  let fenceButtonBubble = document.createElement("div");
+  fenceButtonBubble.className = "bubble";
+  let fenceButton = document.createElement("button");
+  fenceButton.innerText = "Calculate";
+  fenceButton.addEventListener("click", runFencePython);
+  fenceButtonBubble.appendChild(fenceButton);
+  fenceCalcTab.appendChild(fenceButtonBubble);
+
+  // Result Box
+  let fenceResultBox = document.createElement("div");
+  fenceResultBox.className = "result-box";
+  fenceResultBox.innerHTML = `
+    <h2>Fence Cost Estimation</h2>
+    <p>Total Square Footage: <span id="fence-sqft"></span></p>
+    <p>Cost of Material: $<span id="fence-material-cost"></span></p>
+    <p>Suggested Fence Cost: $<span id="fence-suggested-cost"></span></p>
+  `;
+  fenceCalcTab.appendChild(fenceResultBox);
+
+  document.body.appendChild(fenceCalcTab);
+
+  // Tab Navigation Logic
+  document.querySelectorAll(".tab-nav a").forEach(link => {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      // Hide all tabs
+      document.querySelectorAll("div[id$='-tab']").forEach(tab => {
+        tab.style.display = "none";
+      });
+
+      // Show the selected tab
+      let target = this.getAttribute("href").substring(1);
+      document.getElementById(target).style.display = "block";
+    });
+  });
+
+  // Python Calculation Logic
+  async function runFencePython() {
+    let height = Number(document.getElementById("fence-height").value);
+    let length = Number(document.getElementById("fence-length").value);
+    let sides = Number(document.getElementById("fence-sides").value);
+    const pythonCommand = `calculate_fence_cost(${height}, ${length}, ${sides})`;
+    const result = await pyodide.runPythonAsync(pythonCommand);
+    const [sqft, materialCost, suggestedCost] = JSON.parse(result);
+
+    document.getElementById("fence-sqft").innerText = sqft;
+    document.getElementById("fence-material-cost").innerText = materialCost.toFixed(2);
+    document.getElementById("fence-suggested-cost").innerText = suggestedCost.toFixed(2);
+  }
 
 
 
