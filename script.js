@@ -99,32 +99,32 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   let contactP = document.createElement("p");
   contactP.innerHTML =
-    'Contact me at: <a href="mailto:your.email@example.com">your.email@example.com</a>';
+    'Contact me at: <a href="mailto:omegagiven9@gmail.com">omegagiven9@gmail.com</a>';
   contactDiv.appendChild(contactP);
 
-  let socialP = document.createElement("p");
-  socialP.innerText = "Follow me on social media:";
-  contactDiv.appendChild(socialP);
+  // let socialP = document.createElement("p");
+  // socialP.innerText = "Follow me on social media:";
+  // contactDiv.appendChild(socialP);
 
-  let socialUl = document.createElement("ul");
+  // let socialUl = document.createElement("ul");
 
-  let liTwitter = document.createElement("li");
-  let linkTwitter = document.createElement("a");
-  linkTwitter.href = "https://twitter.com/yourhandle";
-  linkTwitter.target = "_blank";
-  linkTwitter.innerText = "Twitter";
-  liTwitter.appendChild(linkTwitter);
-  socialUl.appendChild(liTwitter);
+  // let liTwitter = document.createElement("li");
+  // let linkTwitter = document.createElement("a");
+  // linkTwitter.href = "https://twitter.com/yourhandle";
+  // linkTwitter.target = "_blank";
+  // linkTwitter.innerText = "Twitter";
+  // liTwitter.appendChild(linkTwitter);
+  // socialUl.appendChild(liTwitter);
 
-  let liLinkedIn = document.createElement("li");
-  let linkLinkedIn = document.createElement("a");
-  linkLinkedIn.href = "https://www.linkedin.com/in/yourprofile";
-  linkLinkedIn.target = "_blank";
-  linkLinkedIn.innerText = "LinkedIn";
-  liLinkedIn.appendChild(linkLinkedIn);
-  socialUl.appendChild(liLinkedIn);
+  // let liLinkedIn = document.createElement("li");
+  // let linkLinkedIn = document.createElement("a");
+  // linkLinkedIn.href = "https://www.linkedin.com/in/yourprofile";
+  // linkLinkedIn.target = "_blank";
+  // linkLinkedIn.innerText = "LinkedIn";
+  // liLinkedIn.appendChild(linkLinkedIn);
+  // socialUl.appendChild(liLinkedIn);
 
-  contactDiv.appendChild(socialUl);
+  // contactDiv.appendChild(socialUl);
   footer.appendChild(contactDiv);
   document.body.appendChild(footer);
 
