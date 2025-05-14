@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   
 
 
- // Add a new tab for Fence Calculator
+  // Add a new tab for Fence Calculator
   let fenceNavItem = document.createElement("li");
   let fenceNavLink = document.createElement("a");
   fenceNavLink.href = "#fence-calc-tab";
@@ -50,9 +50,22 @@ document.addEventListener("DOMContentLoaded", async function () {
   fenceCalcTab.id = "fence-calc-tab";
   fenceCalcTab.style.display = "none"; // Initially hidden
 
-  // Fence Calculator Form
-  let fenceFormContainer = document.createElement("div");
+  // Left Column: Description
+  let fenceLeftCol = document.createElement("div");
+  fenceLeftCol.className = "calc-description";
+  let fenceTitle = document.createElement("h1");
+  fenceTitle.innerText = "Fence Cost Calculator";
+  let fenceDesc = document.createElement("p");
+  fenceDesc.innerText =
+    "Calculate the cost to paint a fence. Provide the height, length, and whether one or both sides need to be painted. The calculator will estimate the total square footage, material cost, and the suggested price to charge.";
+  fenceLeftCol.appendChild(fenceTitle);
+  fenceLeftCol.appendChild(fenceDesc);
 
+  // Right Column: Form & Result
+  let fenceRightCol = document.createElement("div");
+  fenceRightCol.className = "calc-form";
+
+  // Container for Input Fields (each vertically stacked)
   const fenceFields = [
     {
       id: "fence-height",
@@ -71,6 +84,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     },
   ];
 
+  let fenceFormContainer = document.createElement("div");
   fenceFields.forEach(field => {
     let fieldContainer = document.createElement("div");
     fieldContainer.className = "field-container";
@@ -87,19 +101,18 @@ document.addEventListener("DOMContentLoaded", async function () {
     fieldContainer.appendChild(input);
     fenceFormContainer.appendChild(fieldContainer);
   });
+  fenceRightCol.appendChild(fenceFormContainer);
 
-  fenceCalcTab.appendChild(fenceFormContainer);
-
-  // Calculate Button
+  // Create a bubble container for the Calculate button
   let fenceButtonBubble = document.createElement("div");
   fenceButtonBubble.className = "bubble";
   let fenceButton = document.createElement("button");
   fenceButton.innerText = "Calculate";
   fenceButton.addEventListener("click", runFencePython);
   fenceButtonBubble.appendChild(fenceButton);
-  fenceCalcTab.appendChild(fenceButtonBubble);
+  fenceRightCol.appendChild(fenceButtonBubble);
 
-  // Result Box
+  // Create the result box
   let fenceResultBox = document.createElement("div");
   fenceResultBox.className = "result-box";
   fenceResultBox.innerHTML = `
@@ -108,9 +121,15 @@ document.addEventListener("DOMContentLoaded", async function () {
     <p>Cost of Material: $<span id="fence-material-cost"></span></p>
     <p>Suggested Fence Cost: $<span id="fence-suggested-cost"></span></p>
   `;
-  fenceCalcTab.appendChild(fenceResultBox);
+  fenceRightCol.appendChild(fenceResultBox);
 
-  document.body.appendChild(fenceCalcTab);
+  // Append both columns to the calculator box
+  let fenceCalcBox = document.createElement("div");
+  fenceCalcBox.className = "calc-box";
+  fenceCalcBox.id = "fence-calc-tab"; // so the nav link can scroll here
+  fenceCalcBox.appendChild(fenceLeftCol);
+  fenceCalcBox.appendChild(fenceRightCol);
+  document.body.appendChild(fenceCalcBox);
 
   // Tab Navigation Logic
   document.querySelectorAll(".tab-nav a").forEach(link => {
@@ -143,6 +162,9 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
 
+
+
+  
 
   
   // 2. Create Calculator Wrapper Box
