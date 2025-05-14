@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   let resultBox = document.createElement("div");
   resultBox.className = "result-box";
   resultBox.innerHTML =
-    '<h2>Estimated Selling Price</h2><p>Result: <span id="result"></span></p>';
+    '<h2>Estimated Selling Price</h2><p>Result: $<span id="result"></span></p>';
   rightCol.appendChild(resultBox);
 
   // Append both columns to the calculator box
