@@ -1,41 +1,93 @@
+/* Define dark mode color variables */
+:root {
+  --bg-color: #121212;
+  --text-color: #f5f5f5;
+  --accent-color: #bb86fc;
+  --input-bg: #1e1e1e;
+  --input-border: #333;
+  --button-bg: #3700b3;
+  --button-hover-bg: #4d00bf;
+  --button-text-color: #ffffff;
+}
+
+/* Basic page styles */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 10px;
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  text-align: center;
+  padding: 10px;
+  margin: 0;
 }
 
+#app {
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 800px;
+}
+
+/* Container for form inputs and button */
 #form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    max-width: 90%;
-    margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin: auto;
 }
 
+/* Input field styling */
 input {
-    width: 100%;  /* Full width for mobile */
-    max-width: 300px;
-    padding: 10px;
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 4px;
+  color: var(--text-color);
+  transition: border 0.3s ease, box-shadow 0.3s ease;
 }
 
+input:focus {
+  outline: none;
+  border: 1px solid var(--accent-color);
+  box-shadow: 0 0 8px var(--accent-color);
+}
+
+/* Button styling */
 button {
-    width: 80%;
-    max-width: 200px;
-    padding: 12px;
-    font-size: 1.2em;
+  width: 80%;
+  max-width: 200px;
+  padding: 12px 20px;
+  font-size: 1.2em;
+  cursor: pointer;
+  background-color: var(--button-bg);
+  color: var(--button-text-color);
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-h2 {
-    margin-top: 20px;
+button:hover {
+  background-color: var(--button-hover-bg);
+  transform: translateY(-2px);
+}
+
+/* Headings and result container */
+h1, h2 {
+  margin: 10px 0;
+}
+
+.result-container {
+  margin-top: 20px;
 }
 
 /* Mobile-Specific Styles */
 @media (max-width: 600px) {
-    body {
-        font-size: 16px;
-    }
-    button {
-        width: 100%; /* Full width on mobile */
-    }
+  body {
+    font-size: 16px;
+  }
+  button {
+    width: 100%;
+  }
 }
