@@ -1,20 +1,30 @@
 document.addEventListener("DOMContentLoaded", function() {
     const app = document.getElementById("app");
 
-    // Create a title
     let title = document.createElement("h1");
     title.innerText = "Home Selling Price Calculator";
     app.appendChild(title);
 
-    // Create a description
     let description = document.createElement("p");
     description.innerText = "Enter values below to estimate the selling price.";
     app.appendChild(description);
 
-    // Create a container for form elements
     let formContainer = document.createElement("div");
     formContainer.setAttribute("id", "form-container");
     app.appendChild(formContainer);
+
+    // Resize for mobile dynamically
+    function adjustLayout() {
+        if (window.innerWidth < 600) {
+            formContainer.style.flexDirection = "column";
+            document.body.style.padding = "20px";
+        } else {
+            formContainer.style.flexDirection = "row";
+        }
+    }
+
+    window.addEventListener("resize", adjustLayout);
+    adjustLayout();  // Run once on page load
 
     // Field configurations
     const fields = [
@@ -26,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
     fields.forEach(field => {
         let label = document.createElement("label");
         label.innerText = field.label;
-        
+
         let input = document.createElement("input");
         input.setAttribute("type", "number");
         input.setAttribute("id", field.id);
@@ -36,18 +46,15 @@ document.addEventListener("DOMContentLoaded", function() {
         formContainer.appendChild(input);
     });
 
-    // Create and append button
     let button = document.createElement("button");
     button.innerText = "Calculate";
     button.addEventListener("click", runPython);
     formContainer.appendChild(button);
 
-    // Create and append result display
     let resultContainer = document.createElement("div");
     resultContainer.innerHTML = "<h2>Estimated Selling Price</h2><p>Result: <span id='result'></span></p>";
     app.appendChild(resultContainer);
 
-    // Load Pyodide for running Python
     async function loadPyodide() {
         window.pyodide = await loadPyodide();
     }
