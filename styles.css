@@ -1,4 +1,4 @@
-/* Dark mode color variables already defined in :root */
+/* Dark mode color variables */
 :root {
   --bg-color: #121212;
   --text-color: #f5f5f5;
@@ -27,7 +27,7 @@ body {
   max-width: 800px;
 }
 
-/* Container for form inputs */
+/* Container for the form elements */
 #form-container {
   display: flex;
   flex-direction: column;
@@ -37,7 +37,17 @@ body {
   margin: auto;
 }
 
-/* Bubble container style */
+/* Container for each input field (label + input) */
+.field-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 10px;
+}
+
+/* Bubble container style for button */
 .bubble {
   background-color: var(--bubble-bg);
   border-radius: 16px;
@@ -51,7 +61,6 @@ body {
 /* Input field styling */
 input {
   width: 100%;
-  max-width: 300px;
   padding: 10px;
   background: var(--input-bg);
   border: 1px solid var(--input-border);
@@ -85,7 +94,17 @@ button:hover {
   transform: translateY(-2px);
 }
 
-/* Headings and result container */
+/* Result box styling */
+.result-box {
+  border: 2px solid var(--accent-color);
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px auto;
+  max-width: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Headings */
 h1, h2 {
   margin: 10px 0;
 }
