@@ -133,6 +133,13 @@ document.addEventListener("DOMContentLoaded", async function () {
   calcBox.appendChild(rightCol);
   document.body.appendChild(calcBox);
 
+
+
+
+
+
+
+  
   // 3. Create Fence Cost Calculator
   let fenceCalcBox = document.createElement("div");
   fenceCalcBox.className = "calc-box";
