@@ -1,6 +1,6 @@
 def calculate_fence_cost(height, length, sides):
     # Calculate total square footage
-    sqft = height * length * sides
+    sqft = height * length
 
     # Cost of materials
     material_cost = sqft * 0.11
