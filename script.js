@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     link.addEventListener("click", function (event) {
       event.preventDefault();
 
-      // Hide all tabs
-      document.querySelectorAll("div[id$='-tab']").forEach(tab => {
+      // Hide all calculator boxes
+      document.querySelectorAll(".calc-box").forEach(tab => {
         tab.style.display = "none";
       });
 
