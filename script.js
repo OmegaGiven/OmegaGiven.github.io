@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function() {
     const app = document.getElementById("app");
 
+    // Create title and description
     let title = document.createElement("h1");
     title.innerText = "Home Selling Price Calculator";
     app.appendChild(title);
@@ -9,6 +10,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     description.innerText = "Enter values below to estimate the selling price.";
     app.appendChild(description);
 
+    // Create the form container for inputs and buttons
     let formContainer = document.createElement("div");
     formContainer.setAttribute("id", "form-container");
     app.appendChild(formContainer);
@@ -32,7 +34,11 @@ document.addEventListener("DOMContentLoaded", async function() {
         { id: "num3", label: "Desired Cashback:", placeholder: "Enter cashback amount" }
     ];
 
+    // Create a vertical container for each field (label + input)
     fields.forEach(field => {
+        let fieldContainer = document.createElement("div");
+        fieldContainer.className = "field-container";
+
         let label = document.createElement("label");
         label.innerText = field.label;
 
@@ -41,8 +47,9 @@ document.addEventListener("DOMContentLoaded", async function() {
         input.setAttribute("id", field.id);
         input.setAttribute("placeholder", field.placeholder);
 
-        formContainer.appendChild(label);
-        formContainer.appendChild(input);
+        fieldContainer.appendChild(label);
+        fieldContainer.appendChild(input);
+        formContainer.appendChild(fieldContainer);
     });
 
     // Create a bubble container for the button
@@ -53,14 +60,13 @@ document.addEventListener("DOMContentLoaded", async function() {
     button.innerText = "Calculate";
     button.addEventListener("click", runPython);
     buttonBubble.appendChild(button);
-    
     formContainer.appendChild(buttonBubble);
 
-    // Create a bubble container for the result output
-    let resultBubble = document.createElement("div");
-    resultBubble.className = "bubble";
-    resultBubble.innerHTML = "<h2>Estimated Selling Price</h2><p>Result: <span id='result'></span></p>";
-    app.appendChild(resultBubble);
+    // Create a result container with a box (result-box)
+    let resultBox = document.createElement("div");
+    resultBox.className = "result-box";
+    resultBox.innerHTML = "<h2>Estimated Selling Price</h2><p>Result: <span id='result'></span></p>";
+    app.appendChild(resultBox);
 
     // Load Pyodide and external Python file
     async function loadPyodideAndPythonScripts() {
@@ -74,7 +80,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
     await loadPyodideAndPythonScripts();
 
-    // Run the Python function using values from the form
+    // Execute Python calculation with form values
     async function runPython() {
         let num1 = Number(document.getElementById("num1").value);
         let num2 = Number(document.getElementById("num2").value);
