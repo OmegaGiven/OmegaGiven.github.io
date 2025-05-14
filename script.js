@@ -14,28 +14,9 @@ document.addEventListener("DOMContentLoaded", async function () {
   document.body.insertBefore(nav, document.body.firstChild);
 
 
-// Add a new tab for the Etsy Store
-  let etsyNavItem = document.createElement("li");
-  let etsyNavLink = document.createElement("a");
-  etsyNavLink.href = "#etsy-tab";
-  etsyNavLink.innerText = "Etsy Store";
-  etsyNavItem.appendChild(etsyNavLink);
-  navList.appendChild(etsyNavItem);
 
-  // Create the Etsy Tab Content
-  let etsyTab = document.createElement("div");
-  etsyTab.id = "etsy-tab";
-  etsyTab.style.display = "none"; // Initially hidden
 
-  let etsyIframe = document.createElement("iframe");
-  etsyIframe.src = "https://www.etsy.com/shop/omegasolutions"; // Replace with your store URL
-  etsyIframe.width = "100%";
-  etsyIframe.height = "800px";
-  etsyIframe.style.border = "none";
-  etsyIframe.title = "Etsy Storefront";
-
-  etsyTab.appendChild(etsyIframe);
-  document.body.appendChild(etsyTab);
+  
 
   // Tab Navigation Logic
   document.querySelectorAll(".tab-nav a").forEach(link => {
@@ -55,6 +36,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   
 
+
+
+
+
+  
   // 2. Create Calculator Wrapper Box
   // This box will have two columns: left for description; right for form and result.
   let calcBox = document.createElement("div");
@@ -134,6 +120,10 @@ document.addEventListener("DOMContentLoaded", async function () {
   calcBox.appendChild(rightCol);
   document.body.appendChild(calcBox);
 
+
+
+
+  
   // 3. Create Footer / Contact Info Section
   let footer = document.createElement("footer");
   let contactDiv = document.createElement("div");
@@ -144,32 +134,19 @@ document.addEventListener("DOMContentLoaded", async function () {
     'Contact me at: <a href="mailto:omegagiven9@gmail.com">omegagiven9@gmail.com</a>';
   contactDiv.appendChild(contactP);
 
-  // let socialP = document.createElement("p");
-  // socialP.innerText = "Follow me on social media:";
-  // contactDiv.appendChild(socialP);
+    // Add a link to the Etsy Store
+  let etsyLinkP = document.createElement("p");
+  etsyLinkP.innerHTML =
+    'Check out my Etsy store: <a href="https://www.etsy.com/shop/OmegaSolutions" target="_blank">My Etsy Store</a>';
+  contactDiv.appendChild(etsyLinkP);
 
-  // let socialUl = document.createElement("ul");
-
-  // let liTwitter = document.createElement("li");
-  // let linkTwitter = document.createElement("a");
-  // linkTwitter.href = "https://twitter.com/yourhandle";
-  // linkTwitter.target = "_blank";
-  // linkTwitter.innerText = "Twitter";
-  // liTwitter.appendChild(linkTwitter);
-  // socialUl.appendChild(liTwitter);
-
-  // let liLinkedIn = document.createElement("li");
-  // let linkLinkedIn = document.createElement("a");
-  // linkLinkedIn.href = "https://www.linkedin.com/in/yourprofile";
-  // linkLinkedIn.target = "_blank";
-  // linkLinkedIn.innerText = "LinkedIn";
-  // liLinkedIn.appendChild(linkLinkedIn);
-  // socialUl.appendChild(liLinkedIn);
-
-  // contactDiv.appendChild(socialUl);
   footer.appendChild(contactDiv);
   document.body.appendChild(footer);
 
+
+
+
+  
   // 4. Load Pyodide and External Python Code
   async function loadPyodideAndPythonScripts() {
     window.pyodide = await loadPyodide();
