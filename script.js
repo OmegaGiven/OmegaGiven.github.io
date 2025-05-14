@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   etsyTab.style.display = "none"; // Initially hidden
 
   let etsyIframe = document.createElement("iframe");
-  etsyIframe.src = "https://omegasolutions.etsy.com"; // Replace with your store URL
+  etsyIframe.src = "https://www.etsy.com/shop/omegasolutions"; // Replace with your store URL
   etsyIframe.width = "100%";
   etsyIframe.height = "800px";
   etsyIframe.style.border = "none";
