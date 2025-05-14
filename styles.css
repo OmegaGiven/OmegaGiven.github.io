@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 10px;
+}
+
+#form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    max-width: 90%;
+    margin: auto;
+}
+
+input {
+    width: 100%;  /* Full width for mobile */
+    max-width: 300px;
+    padding: 10px;
+}
+
+button {
+    width: 80%;
+    max-width: 200px;
+    padding: 12px;
+    font-size: 1.2em;
+}
+
+h2 {
+    margin-top: 20px;
+}
+
+/* Mobile-Specific Styles */
+@media (max-width: 600px) {
+    body {
+        font-size: 16px;
+    }
+    button {
+        width: 100%; /* Full width on mobile */
+    }
+}
