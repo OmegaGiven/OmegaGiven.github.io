@@ -5,12 +5,17 @@ document.addEventListener("DOMContentLoaded", function() {
     let num1 = document.createElement("input");
     num1.setAttribute("type", "number");
     num1.setAttribute("id", "num1");
-    num1.setAttribute("placeholder", "Enter first number");
+    num1.setAttribute("placeholder", "Enter current debt on the house");
 
     let num2 = document.createElement("input");
     num2.setAttribute("type", "number");
     num2.setAttribute("id", "num2");
-    num2.setAttribute("placeholder", "Enter second number");
+    num2.setAttribute("placeholder", "Enter Realestate cost in XXX% without the %");
+    
+    let num3 = document.createElement("input");
+    num3.setAttribute("type", "number");
+    num3.setAttribute("id", "num2");
+    num3.setAttribute("placeholder", "Enter Desired Cashback");
 
     let button = document.createElement("button");
     button.innerText = "Calculate";
@@ -22,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Append elements to the page
     app.appendChild(num1);
     app.appendChild(num2);
+    app.appendChild(num3);
     app.appendChild(button);
     app.appendChild(result);
 
