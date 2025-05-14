@@ -13,6 +13,48 @@ document.addEventListener("DOMContentLoaded", async function () {
   nav.appendChild(navList);
   document.body.insertBefore(nav, document.body.firstChild);
 
+
+// Add a new tab for the Etsy Store
+  let etsyNavItem = document.createElement("li");
+  let etsyNavLink = document.createElement("a");
+  etsyNavLink.href = "#etsy-tab";
+  etsyNavLink.innerText = "Etsy Store";
+  etsyNavItem.appendChild(etsyNavLink);
+  navList.appendChild(etsyNavItem);
+
+  // Create the Etsy Tab Content
+  let etsyTab = document.createElement("div");
+  etsyTab.id = "etsy-tab";
+  etsyTab.style.display = "none"; // Initially hidden
+
+  let etsyIframe = document.createElement("iframe");
+  etsyIframe.src = "https://omegasolutions.etsy.com"; // Replace with your store URL
+  etsyIframe.width = "100%";
+  etsyIframe.height = "800px";
+  etsyIframe.style.border = "none";
+  etsyIframe.title = "Etsy Storefront";
+
+  etsyTab.appendChild(etsyIframe);
+  document.body.appendChild(etsyTab);
+
+  // Tab Navigation Logic
+  document.querySelectorAll(".tab-nav a").forEach(link => {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      // Hide all tabs
+      document.querySelectorAll("div[id$='-tab']").forEach(tab => {
+        tab.style.display = "none";
+      });
+
+      // Show the selected tab
+      let target = this.getAttribute("href").substring(1);
+      document.getElementById(target).style.display = "block";
+    });
+  });
+
+  
+
   // 2. Create Calculator Wrapper Box
   // This box will have two columns: left for description; right for form and result.
   let calcBox = document.createElement("div");
