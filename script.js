@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
     const app = document.getElementById("app");
 
     let title = document.createElement("h1");
@@ -55,24 +55,35 @@ document.addEventListener("DOMContentLoaded", function() {
     resultContainer.innerHTML = "<h2>Estimated Selling Price</h2><p>Result: <span id='result'></span></p>";
     app.appendChild(resultContainer);
 
-    async function loadPyodide() {
+    // Load Pyodide
+    async function loadPyodideAndPythonScripts() {
         window.pyodide = await loadPyodide();
-    }
-    loadPyodide();
 
+        // Load external Python file(s). 
+        // If you have multiple Python files, you can fetch each one.
+        const response = await fetch('sell_price_calculator.py');
+        if (!response.ok) {
+            throw new Error("Failed to load sell_price_calculator.py");
+        }
+        const sellPriceScript = await response.text();
+        await pyodide.runPythonAsync(sellPriceScript);
+    }
+    await loadPyodideAndPythonScripts();
+
+    // Run the Python function using values from your form
     async function runPython() {
         let num1 = document.getElementById("num1").value;
         let num2 = document.getElementById("num2").value;
         let num3 = document.getElementById("num3").value;
 
-        let pythonCode = `
-def calculate_sell_price(debt, realestate_cost, desired_cashback):
-    return (debt + desired_cashback) * (1 + (realestate_cost * 0.01))
-
-result = calculate_sell_price(${num1}, ${num2}, ${num3})
-`;
-
-        let output = await pyodide.runPythonAsync(pythonCode);
-        document.getElementById("result").innerText = output;
+        // Ensure that values are properly converted to numbers if necessary:
+        num1 = Number(num1);
+        num2 = Number(num2);
+        num3 = Number(num3);
+        
+        // Call the Python function defined in the external file
+        const pythonCommand = `calculate_sell_price(${num1}, ${num2}, ${num3})`;
+        const result = await pyodide.runPythonAsync(pythonCommand);
+        document.getElementById("result").innerText = result;
     }
 });
