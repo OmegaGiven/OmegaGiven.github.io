@@ -44,25 +44,36 @@ document.addEventListener("DOMContentLoaded", async function () {
   document.body.appendChild(printingToolsBox);
   console.log("3d printing containers created and appended");
 
-  // Parent Tab Logic
-  parentNavLink.addEventListener("click", function (event) {
+  // Initially hide all tabs except Calculators
+  calculatorsBox.style.display = "block";
+  printingToolsBox.style.display = "none";
+  
+  // Tab Switching Logic
+  calculatorsNavLink.addEventListener("click", function (event) {
     event.preventDefault();
-    console.log("Parent tab clicked");
-
-    // Hide all other main tabs
-    document.querySelectorAll(".calc-box").forEach(tab => {
-      tab.style.display = "none";
-    });
-    console.log("All other tabs hidden");
-
-    // Show the calculators container
     calculatorsBox.style.display = "block";
-    console.log("Calculators container displayed");
+    printingToolsBox.style.display = "none";
   });
 
-  // Initially hide all calculators and parent tabs
-  calculatorsBox.style.display = "none";
-  console.log("Calculators container initially hidden");
+  printingToolsNavLink.addEventListener("click", function (event) {
+    event.preventDefault();
+    calculatorsBox.style.display = "none";
+    printingToolsBox.style.display = "block";
+
+    // Dynamically Load 3D Printing Tools Script
+    if (!printingToolsBox.loaded) {
+      const script = document.createElement("script");
+      script.src = "3d-printing-tools.js";
+      script.onload = function () {
+        console.log("3d-printing-tools.js loaded successfully");
+        printingToolsBox.loaded = true; // Prevent reloading the script
+      };
+      script.onerror = function () {
+        console.error("Failed to load 3d-printing-tools.js");
+      };
+      document.head.appendChild(script);
+    }
+  });
 
 
   // Dynamically load and execute calculators.js
