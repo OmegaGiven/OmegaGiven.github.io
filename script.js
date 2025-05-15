@@ -302,7 +302,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // Add a link to the Github
   let gitlinkP = document.createElement("p");
-  contactP.innerHTML =
+  gitlinkP.innerHTML =
     'Contact me at: <a href="https://github.com/OmegaGiven">GitHub</a>';
   contactDiv.appendChild(gitlinkP);
   
