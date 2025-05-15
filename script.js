@@ -286,4 +286,32 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
   await loadPyodideAndPythonScripts();
+
+
+
+
+  // 3. Create Footer / Contact Info Section
+  let footer = document.createElement("footer");
+  let contactDiv = document.createElement("div");
+  contactDiv.className = "contact-info";
+
+  let contactP = document.createElement("p");
+  contactP.innerHTML =
+    'Contact me at: <a href="mailto:omegagiven9@gmail.com">omegagiven9@gmail.com</a>';
+  contactDiv.appendChild(contactP);
+
+  // Add a link to the Github
+  let gitlinkP = document.createElement("p");
+  contactP.innerHTML =
+    'Contact me at: <a href="https://github.com/OmegaGiven">GitHub</a>';
+  contactDiv.appendChild(gitlinkP);
+  
+  // Add a link to the Etsy Store
+  let etsyLinkP = document.createElement("p");
+  etsyLinkP.innerHTML =
+    'Check out my Etsy store: <a href="https://www.etsy.com/shop/OmegaSolutions" target="_blank">My Etsy Store</a>';
+  contactDiv.appendChild(etsyLinkP);
+
+  footer.appendChild(contactDiv);
+  document.body.appendChild(footer);
 });
