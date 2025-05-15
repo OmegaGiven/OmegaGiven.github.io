@@ -83,7 +83,6 @@ function createHomeSellingCalculator(container) {
   // Left Column: Description
   let leftCol = document.createElement("div");
   leftCol.className = "calc-description";
-  let title = document.createElement("h1");
   title.innerText = "Home Selling Price Calculator";
   let desc = document.createElement("p");
   desc.innerText =
