@@ -32,8 +32,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // Create container for calculators
   let calculatorsBox = document.createElement("div");
-  calculatorsBox.className = "calc-container";
-  calculatorsBox.id = parentTab.id;
+  calculatorsBox.className = "tab-content";
+  calculatorsBox.id = calculatorsTab.id;
   document.body.appendChild(calculatorsBox);
   console.log("Calculators container created and appended");
 
