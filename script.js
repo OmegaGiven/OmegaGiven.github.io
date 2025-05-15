@@ -11,7 +11,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
   
-  // Add tabs for Home Selling Price Calculator and Fence Calculator
+  
+  // Add tabs for Calculators
   const tabs = [
     { id: "calc-box", name: "Home Selling Price Calculator" },
     { id: "fence-calc-tab", name: "Fence Cost Calculator" },
@@ -51,6 +52,121 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 
+  
+
+  // Add Investment Calculator Tab
+  const investmentTab = { id: "investment-calc-tab", name: "Investment Calculator" };
+  let navList = document.querySelector(".tab-nav ul");
+  let navItem = document.createElement("li");
+  let navLink = document.createElement("a");
+  navLink.href = `#${investmentTab.id}`;
+  navLink.innerText = investmentTab.name;
+  navItem.appendChild(navLink);
+  navList.appendChild(navItem);
+
+  // Create Investment Calculator Content
+  let investmentCalcBox = document.createElement("div");
+  investmentCalcBox.className = "calc-box";
+  investmentCalcBox.id = investmentTab.id; // Matches the tab link
+
+  // Left Column: Description
+  let investmentLeftCol = document.createElement("div");
+  investmentLeftCol.className = "calc-description";
+  let investmentTitle = document.createElement("h1");
+  investmentTitle.innerText = "Investment Calculator";
+  let investmentDesc = document.createElement("p");
+  investmentDesc.innerText =
+    "Calculate the future value of your investment. Enter the initial investment amount, annual percentage yield (APY), and the number of years to see how much your money will grow.";
+  investmentLeftCol.appendChild(investmentTitle);
+  investmentLeftCol.appendChild(investmentDesc);
+
+  // Right Column: Form & Result
+  let investmentRightCol = document.createElement("div");
+  investmentRightCol.className = "calc-form";
+
+  // Input Fields
+  const investmentFields = [
+    {
+      id: "initial-investment",
+      label: "Initial Investment Amount ($):",
+      placeholder: "Enter initial amount",
+    },
+    {
+      id: "apy",
+      label: "Annual Percentage Yield (APY %):",
+      placeholder: "Enter APY (e.g., 5 for 5%)",
+    },
+    {
+      id: "years",
+      label: "Number of Years:",
+      placeholder: "Enter number of years",
+    },
+  ];
+
+  let investmentFormContainer = document.createElement("div");
+  investmentFields.forEach(field => {
+    let fieldContainer = document.createElement("div");
+    fieldContainer.className = "field-container";
+
+    let label = document.createElement("label");
+    label.innerText = field.label;
+
+    let input = document.createElement("input");
+    input.type = "number";
+    input.id = field.id;
+    input.placeholder = field.placeholder;
+
+    fieldContainer.appendChild(label);
+    fieldContainer.appendChild(input);
+    investmentFormContainer.appendChild(fieldContainer);
+  });
+  investmentRightCol.appendChild(investmentFormContainer);
+
+  // Create a bubble container for the Calculate button
+  let investmentButtonBubble = document.createElement("div");
+  investmentButtonBubble.className = "bubble";
+  let investmentButton = document.createElement("button");
+  investmentButton.innerText = "Calculate";
+  investmentButton.addEventListener("click", calculateFutureValue);
+  investmentButtonBubble.appendChild(investmentButton);
+  investmentRightCol.appendChild(investmentButtonBubble);
+
+  // Create the result box
+  let investmentResultBox = document.createElement("div");
+  investmentResultBox.className = "result-box";
+  investmentResultBox.innerHTML = `
+    <h2>Investment Growth</h2>
+    <p>Future Value: $<span id="future-value"></span></p>
+  `;
+  investmentRightCol.appendChild(investmentResultBox);
+
+  // Append both columns to the calculator box
+  investmentCalcBox.appendChild(investmentLeftCol);
+  investmentCalcBox.appendChild(investmentRightCol);
+  document.body.appendChild(investmentCalcBox);
+
+  // Initially hide all tabs except the first one
+  document.querySelectorAll(".calc-box").forEach((tab, index) => {
+    tab.style.display = index === 0 ? "block" : "none";
+  });
+
+  // Calculator Logic
+  function calculateFutureValue() {
+    let principal = Number(document.getElementById("initial-investment").value);
+    let apy = Number(document.getElementById("apy").value) / 100; // Convert APY to decimal
+    let years = Number(document.getElementById("years").value);
+
+    if (principal <= 0 || apy <= 0 || years <= 0) {
+      alert("Please enter positive values for all fields.");
+      return;
+    }
+
+    let futureValue = principal * Math.pow(1 + apy, years);
+    document.getElementById("future-value").innerText = futureValue.toFixed(2);
+  }
+
+
+  
 
 
   
@@ -261,9 +377,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 
-
-
-
   
   // Load Pyodide and External Python Scripts
   async function loadPyodideAndPythonScripts() {
@@ -290,12 +403,19 @@ document.addEventListener("DOMContentLoaded", async function () {
   let contactDiv = document.createElement("div");
   contactDiv.className = "contact-info";
 
+  // Add a link to email
   let contactP = document.createElement("p");
   contactP.innerHTML =
     'Contact me at: <a href="mailto:omegagiven9@gmail.com">omegagiven9@gmail.com</a>';
   contactDiv.appendChild(contactP);
 
-    // Add a link to the Etsy Store
+  // Add a link to the Github
+  let gitlinkP = document.createElement("p");
+  contactP.innerHTML =
+    'Contact me at: <a href="https://github.com/OmegaGiven">GitHub</a>';
+  contactDiv.appendChild(gitlinkP);
+
+   // Add a link to the Etsy Store
   let etsyLinkP = document.createElement("p");
   etsyLinkP.innerHTML =
     'Check out my Etsy store: <a href="https://www.etsy.com/shop/OmegaSolutions" target="_blank">My Etsy Store</a>';
