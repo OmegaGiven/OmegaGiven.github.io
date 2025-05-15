@@ -1,9 +1,9 @@
 console.log("calculators.js is executing"); // Debugging log
 
 const calculators = [
-  { id: "calc-box", name: "Home Selling Price Calculator" },
-  { id: "fence-calc-tab", name: "Fence Cost Calculator" },
-  { id: "investment-calc-tab", name: "Investment Calculator" },
+  { id: "home-selling-calc", name: "Home Selling Price Calculator" },
+  { id: "fence-calc", name: "Fence Cost Calculator" },
+  { id: "investment-calc", name: "Investment Calculator" },
 ];
 
 let calculatorsBox = document.getElementById("calculators-tab");
@@ -33,19 +33,20 @@ calculators.forEach(calc => {
   calcBox.style.display = "none"; // Hide initially
   calculatorsBox.appendChild(calcBox);
 
-  // Add Calculator Content
-  if (calc.id === "calc-box") {
-    createHomeSellingCalculator(calcBox);
-  } else if (calc.id === "fence-calc-tab") {
-    createFenceCalculator(calcBox);
-  } else if (calc.id === "investment-calc-tab") {
-    createInvestmentCalculator(calcBox);
+  // Add content to each calculator
+  switch (calc.id) {
+    case "home-selling-calc":
+      createHomeSellingCalculator(calcBox);
+      break;
+    case "fence-calc":
+      createFenceCalculator(calcBox);
+      break;
+    case "investment-calc":
+      createInvestmentCalculator(calcBox);
+      break;
   }
 });
 
-
-
-  
 // Sub-tab Navigation Logic
 document.querySelectorAll(".sub-nav a").forEach(link => {
   link.addEventListener("click", function (event) {
@@ -69,35 +70,23 @@ document.querySelectorAll(".sub-nav a").forEach(link => {
   });
 });
 
-
-
-
-
+// Create Home Selling Price Calculator
 function createHomeSellingCalculator(container) {
-  // Add Home Selling Price Calculator content
   console.log("Creating Home Selling Price Calculator");
+
   let title = document.createElement("h1");
   title.innerText = "Home Selling Price Calculator";
   container.appendChild(title);
-    
-  // Left Column: Description
-  let leftCol = document.createElement("div");
-  leftCol.className = "calc-description";
-  title.innerText = "Home Selling Price Calculator";
+
   let desc = document.createElement("p");
   desc.innerText =
-    "Enter the values on the right to estimate the selling price of your home. Use the form fields to input your current debt, real estate cost percentage, and desired cashback.";
-  leftCol.appendChild(title);
-  leftCol.appendChild(desc);
-
-  // Right Column: Form & Result
-  let rightCol = document.createElement("div");
-  rightCol.className = "calc-form";
+    "Enter the values below to estimate the selling price of your home.";
+  container.appendChild(desc);
 
   const fields = [
-    { id: "num1", label: "Current Debt on House:", placeholder: "Enter debt amount" },
+    { id: "num1", label: "Current Debt on House ($):", placeholder: "Enter debt amount" },
     { id: "num2", label: "Real Estate Cost (%):", placeholder: "Enter cost percentage" },
-    { id: "num3", label: "Desired Cashback:", placeholder: "Enter cashback amount" },
+    { id: "num3", label: "Desired Cashback ($):", placeholder: "Enter cashback amount" },
   ];
 
   let formContainer = document.createElement("div");
@@ -117,10 +106,8 @@ function createHomeSellingCalculator(container) {
     fieldContainer.appendChild(input);
     formContainer.appendChild(fieldContainer);
   });
-  rightCol.appendChild(formContainer);
+  container.appendChild(formContainer);
 
-  let buttonBubble = document.createElement("div");
-  buttonBubble.className = "bubble";
   let button = document.createElement("button");
   button.innerText = "Calculate";
   button.addEventListener("click", async () => {
@@ -130,54 +117,37 @@ function createHomeSellingCalculator(container) {
 
     const pythonCommand = `calculate_sell_price(${num1}, ${num2}, ${num3})`;
     const result = await pyodide.runPythonAsync(pythonCommand);
-    document.getElementById("result").innerText = result;
+    resultBox.innerText = `Result: $${result}`;
   });
-  buttonBubble.appendChild(button);
-  rightCol.appendChild(buttonBubble);
+
+  container.appendChild(button);
 
   let resultBox = document.createElement("div");
   resultBox.className = "result-box";
-  resultBox.innerHTML = '<h2>Estimated Selling Price</h2><p>Result: $<span id="result"></span></p>';
-  rightCol.appendChild(resultBox);
-
-  container.appendChild(leftCol);
-  container.appendChild(rightCol);
-  document.body.appendChild(container);
+  container.appendChild(resultBox);
 }
 
-
-
-
-
-
+// Create Fence Cost Calculator
 function createFenceCalculator(container) {
-  // Add Fence Cost Calculator content
   console.log("Creating Fence Cost Calculator");
+
   let title = document.createElement("h1");
   title.innerText = "Fence Cost Calculator";
   container.appendChild(title);
 
-  let fenceLeftCol = document.createElement("div");
-  fenceLeftCol.className = "calc-description";
-  let fenceTitle = document.createElement("h1");
-  fenceTitle.innerText = "Fence Cost Calculator";
-  let fenceDesc = document.createElement("p");
-  fenceDesc.innerText =
-    "Calculate the cost to paint a fence. Provide the height, length, and whether one or both sides need to be painted.";
-  fenceLeftCol.appendChild(fenceTitle);
-  fenceLeftCol.appendChild(fenceDesc);
+  let desc = document.createElement("p");
+  desc.innerText =
+    "Calculate the cost to paint a fence. Provide the dimensions and sides to paint.";
+  container.appendChild(desc);
 
-  let fenceRightCol = document.createElement("div");
-  fenceRightCol.className = "calc-form";
-
-  const fenceFields = [
+  const fields = [
     { id: "fence-height", label: "Height of Fence (ft):", placeholder: "Enter height" },
     { id: "fence-length", label: "Length of Fence (ft):", placeholder: "Enter length" },
     { id: "fence-sides", label: "Number of Sides (1 or 2):", placeholder: "Enter sides" },
   ];
 
-  let fenceFormContainer = document.createElement("div");
-  fenceFields.forEach(field => {
+  let formContainer = document.createElement("div");
+  fields.forEach(field => {
     let fieldContainer = document.createElement("div");
     fieldContainer.className = "field-container";
 
@@ -191,15 +161,13 @@ function createFenceCalculator(container) {
 
     fieldContainer.appendChild(label);
     fieldContainer.appendChild(input);
-    fenceFormContainer.appendChild(fieldContainer);
+    formContainer.appendChild(fieldContainer);
   });
-  fenceRightCol.appendChild(fenceFormContainer);
+  container.appendChild(formContainer);
 
-  let fenceButtonBubble = document.createElement("div");
-  fenceButtonBubble.className = "bubble";
-  let fenceButton = document.createElement("button");
-  fenceButton.innerText = "Calculate";
-  fenceButton.addEventListener("click", async () => {
+  let button = document.createElement("button");
+  button.innerText = "Calculate";
+  button.addEventListener("click", async () => {
     let height = Number(document.getElementById("fence-height").value);
     let length = Number(document.getElementById("fence-length").value);
     let sides = Number(document.getElementById("fence-sides").value);
@@ -208,60 +176,41 @@ function createFenceCalculator(container) {
     const result = await pyodide.runPythonAsync(pythonCommand);
     const [sqft, materialCost, suggestedCost] = JSON.parse(result);
 
-    document.getElementById("fence-sqft").innerText = sqft;
-    document.getElementById("fence-material-cost").innerText = materialCost.toFixed(2);
-    document.getElementById("fence-suggested-cost").innerText = suggestedCost.toFixed(2);
+    resultBox.innerHTML = `
+      Total Square Footage: ${sqft} <br>
+      Cost of Material: $${materialCost.toFixed(2)} <br>
+      Suggested Fence Cost: $${suggestedCost.toFixed(2)}
+    `;
   });
-  fenceButtonBubble.appendChild(fenceButton);
-  fenceRightCol.appendChild(fenceButtonBubble);
 
-  let fenceResultBox = document.createElement("div");
-  fenceResultBox.className = "result-box";
-  fenceResultBox.innerHTML = `
-    <h2>Fence Cost Estimation</h2>
-    <p>Total Square Footage: <span id="fence-sqft"></span></p>
-    <p>Cost of Material: $<span id="fence-material-cost"></span></p>
-    <p>Suggested Fence Cost: $<span id="fence-suggested-cost"></span></p>
-  `;
-  fenceRightCol.appendChild(fenceResultBox);
+  container.appendChild(button);
 
-  fenceCalcBox.appendChild(fenceLeftCol);
-  fenceCalcBox.appendChild(fenceRightCol);
-  document.body.appendChild(fenceCalcBox);
+  let resultBox = document.createElement("div");
+  resultBox.className = "result-box";
+  container.appendChild(resultBox);
 }
 
-
-
-
-
+// Create Investment Calculator
 function createInvestmentCalculator(container) {
-  // Add Investment Calculator content
   console.log("Creating Investment Calculator");
+
   let title = document.createElement("h1");
   title.innerText = "Investment Calculator";
   container.appendChild(title);
-    
-  let investmentLeftCol = document.createElement("div");
-  investmentLeftCol.className = "calc-description";
-  let investmentTitle = document.createElement("h1");
-  investmentTitle.innerText = "Investment Calculator";
-  let investmentDesc = document.createElement("p");
-  investmentDesc.innerText =
-    "Calculate the future value of your investment. Enter the initial investment amount, annual percentage yield (APY), and the number of years.";
-  investmentLeftCol.appendChild(investmentTitle);
-  investmentLeftCol.appendChild(investmentDesc);
 
-  let investmentRightCol = document.createElement("div");
-  investmentRightCol.className = "calc-form";
+  let desc = document.createElement("p");
+  desc.innerText =
+    "Calculate the future value of your investment. Provide the details below.";
+  container.appendChild(desc);
 
-  const investmentFields = [
+  const fields = [
     { id: "initial-investment", label: "Initial Investment ($):", placeholder: "Enter initial amount" },
     { id: "apy", label: "APY (%):", placeholder: "Enter APY" },
     { id: "years", label: "Years:", placeholder: "Enter years" },
   ];
 
-  let investmentFormContainer = document.createElement("div");
-  investmentFields.forEach(field => {
+  let formContainer = document.createElement("div");
+  fields.forEach(field => {
     let fieldContainer = document.createElement("div");
     fieldContainer.className = "field-container";
 
@@ -275,40 +224,25 @@ function createInvestmentCalculator(container) {
 
     fieldContainer.appendChild(label);
     fieldContainer.appendChild(input);
-    investmentFormContainer.appendChild(fieldContainer);
+    formContainer.appendChild(fieldContainer);
   });
-  investmentRightCol.appendChild(investmentFormContainer);
+  container.appendChild(formContainer);
 
-  let investmentButtonBubble = document.createElement("div");
-  investmentButtonBubble.className = "bubble";
-  let investmentButton = document.createElement("button");
-  investmentButton.innerText = "Calculate";
-  investmentButton.addEventListener("click", async () => {
+  let button = document.createElement("button");
+  button.innerText = "Calculate";
+  button.addEventListener("click", async () => {
     let principal = Number(document.getElementById("initial-investment").value);
     let apy = Number(document.getElementById("apy").value);
     let years = Number(document.getElementById("years").value);
 
     const pythonCommand = `calculate_investment_future_value(${principal}, ${apy}, ${years})`;
     const result = await pyodide.runPythonAsync(pythonCommand);
-    document.getElementById("future-value").innerText = result;
+    resultBox.innerHTML = `Future Value: $${result}`;
   });
-  investmentButtonBubble.appendChild(investmentButton);
-  investmentRightCol.appendChild(investmentButtonBubble);
 
-  let investmentResultBox = document.createElement("div");
-  investmentResultBox.className = "result-box";
-  investmentResultBox.innerHTML = `
-    <h2>Investment Growth</h2>
-    <p>Future Value: $<span id="future-value"></span></p>
-  `;
-  investmentRightCol.appendChild(investmentResultBox);
+  container.appendChild(button);
 
-  investmentCalcBox.appendChild(investmentLeftCol);
-  investmentCalcBox.appendChild(investmentRightCol);
-  document.body.appendChild(investmentCalcBox);
-
-  // Initially hide all tabs except the first one
-  document.querySelectorAll(".calc-box").forEach((tab, index) => {
-    tab.style.display = index === 0 ? "block" : "none";
-  });
+  let resultBox = document.createElement("div");
+  resultBox.className = "result-box";
+  container.appendChild(resultBox);
 }
