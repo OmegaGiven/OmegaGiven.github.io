@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", async function () {
- document.addEventListener("DOMContentLoaded", async function () {
   // 1. Create Navigation Tab
   let nav = document.createElement("nav");
   nav.className = "tab-nav";
