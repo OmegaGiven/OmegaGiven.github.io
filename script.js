@@ -21,12 +21,28 @@ document.addEventListener("DOMContentLoaded", async function () {
   navList.appendChild(parentNavItem);
   console.log("Parent tab added to the navigation");
 
+  // Add "3D Printing Tools" Tab
+  const printingToolsTab = { id: "printing-tools-tab", name: "3D Printing Tools" };
+  let printingToolsNavItem = document.createElement("li");
+  let printingToolsNavLink = document.createElement("a");
+  printingToolsNavLink.href = `#${printingToolsTab.id}`;
+  printingToolsNavLink.innerText = printingToolsTab.name;
+  printingToolsNavItem.appendChild(printingToolsNavLink);
+  navList.appendChild(printingToolsNavItem);
+
   // Create container for calculators
   let calculatorsBox = document.createElement("div");
   calculatorsBox.className = "calc-container";
   calculatorsBox.id = parentTab.id;
   document.body.appendChild(calculatorsBox);
   console.log("Calculators container created and appended");
+
+  // Create Containers for 3d printing tools
+  let printingToolsBox = document.createElement("div");
+  printingToolsBox.className = "tab-content";
+  printingToolsBox.id = printingToolsTab.id;
+  document.body.appendChild(printingToolsBox);
+  console.log("3d printing containers created and appended");
 
   // Parent Tab Logic
   parentNavLink.addEventListener("click", function (event) {
