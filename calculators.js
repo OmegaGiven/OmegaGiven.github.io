@@ -376,21 +376,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   }
 
-// 3. Load Pyodide and External Python Scripts
-  async function loadPyodideAndPythonScripts() {
-    window.pyodide = await loadPyodide();
-
-    const pythonScripts = ["sell_price_calculator.py", "fence_cost_calculator.py", "investment_calculator.py"];
-    for (const script of pythonScripts) {
-      const response = await fetch(script);
-      if (!response.ok) {
-        throw new Error(`Failed to load ${script}`);
-      }
-      const scriptText = await response.text();
-      await pyodide.runPythonAsync(scriptText);
-    }
-  }
-  await loadPyodideAndPythonScripts();
 
   
 });
