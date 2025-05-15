@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Add a link to the Github
   let gitlinkP = document.createElement("p");
   gitlinkP.innerHTML =
-    'Contact me at: <a href="https://github.com/OmegaGiven">GitHub</a>';
+    'See other projects on Github: <a href="https://github.com/OmegaGiven">GitHub</a>';
   contactDiv.appendChild(gitlinkP);
 
   // Add a link to the Etsy Store
