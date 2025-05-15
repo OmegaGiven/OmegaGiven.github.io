@@ -48,6 +48,19 @@ document.addEventListener("DOMContentLoaded", async function () {
   calculatorsBox.style.display = "none";
   console.log("Calculators container initially hidden");
 
+
+  // Dynamically load and execute calculators.js
+  const script = document.createElement("script");
+  script.src = "calculators.js";
+  script.onload = function () {
+    console.log("calculators.js loaded successfully");
+  };
+  script.onerror = function () {
+    console.error("Failed to load calculators.js");
+  };
+  document.head.appendChild(script);
+  console.log("calculators.js script tag appended to the head");
+
   // Load Pyodide and External Python Scripts
   async function loadPyodideAndPythonScripts() {
     try {
@@ -68,20 +81,17 @@ document.addEventListener("DOMContentLoaded", async function () {
       console.error("Error loading Pyodide or Python scripts:", error);
     }
   }
-  await loadPyodideAndPythonScripts();
 
-  // Dynamically load and execute calculators.js
-  const script = document.createElement("script");
-  script.src = "calculators.js";
-  script.onload = function () {
-    console.log("calculators.js loaded successfully");
-  };
-  script.onerror = function () {
-    console.error("Failed to load calculators.js");
-  };
-  document.head.appendChild(script);
-  console.log("calculators.js script tag appended to the head");
+  
+  // Wrap the call in an async function
+  async function initializePyodide() {
+    await loadPyodideAndPythonScripts();
+  }
 
+  // Call the async function
+  initializePyodide();
+
+  
   // 3. Create Footer / Contact Info Section
   let footer = document.createElement("footer");
   let contactDiv = document.createElement("div");
