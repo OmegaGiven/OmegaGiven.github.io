@@ -140,88 +140,11 @@ function createHomeSellingCalculator(container) {
   resultBox.innerHTML = '<h2>Estimated Selling Price</h2><p>Result: $<span id="result"></span></p>';
   rightCol.appendChild(resultBox);
 
-  calcBox.appendChild(leftCol);
-  calcBox.appendChild(rightCol);
-  document.body.appendChild(calcBox);
-
-  // 3. Fence Cost Calculator
-  let fenceCalcBox = document.createElement("div");
-  fenceCalcBox.className = "calc-box";
-  fenceCalcBox.id = "fence-calc-tab";
-
-  let fenceLeftCol = document.createElement("div");
-  fenceLeftCol.className = "calc-description";
-  let fenceTitle = document.createElement("h1");
-  fenceTitle.innerText = "Fence Cost Calculator";
-  let fenceDesc = document.createElement("p");
-  fenceDesc.innerText =
-    "Calculate the cost to paint a fence. Provide the height, length, and whether one or both sides need to be painted.";
-  fenceLeftCol.appendChild(fenceTitle);
-  fenceLeftCol.appendChild(fenceDesc);
-
-  let fenceRightCol = document.createElement("div");
-  fenceRightCol.className = "calc-form";
-
-  const fenceFields = [
-    { id: "fence-height", label: "Height of Fence (ft):", placeholder: "Enter height" },
-    { id: "fence-length", label: "Length of Fence (ft):", placeholder: "Enter length" },
-    { id: "fence-sides", label: "Number of Sides (1 or 2):", placeholder: "Enter sides" },
-  ];
-
-  let fenceFormContainer = document.createElement("div");
-  fenceFields.forEach(field => {
-    let fieldContainer = document.createElement("div");
-    fieldContainer.className = "field-container";
-
-    let label = document.createElement("label");
-    label.innerText = field.label;
-
-    let input = document.createElement("input");
-    input.type = "number";
-    input.id = field.id;
-    input.placeholder = field.placeholder;
-
-    fieldContainer.appendChild(label);
-    fieldContainer.appendChild(input);
-    fenceFormContainer.appendChild(fieldContainer);
-  });
-  fenceRightCol.appendChild(fenceFormContainer);
-
-  let fenceButtonBubble = document.createElement("div");
-  fenceButtonBubble.className = "bubble";
-  let fenceButton = document.createElement("button");
-  fenceButton.innerText = "Calculate";
-  fenceButton.addEventListener("click", async () => {
-    let height = Number(document.getElementById("fence-height").value);
-    let length = Number(document.getElementById("fence-length").value);
-    let sides = Number(document.getElementById("fence-sides").value);
-
-    const pythonCommand = `calculate_fence_cost(${height}, ${length}, ${sides})`;
-    const result = await pyodide.runPythonAsync(pythonCommand);
-    const [sqft, materialCost, suggestedCost] = JSON.parse(result);
-
-    document.getElementById("fence-sqft").innerText = sqft;
-    document.getElementById("fence-material-cost").innerText = materialCost.toFixed(2);
-    document.getElementById("fence-suggested-cost").innerText = suggestedCost.toFixed(2);
-  });
-  fenceButtonBubble.appendChild(fenceButton);
-  fenceRightCol.appendChild(fenceButtonBubble);
-
-  let fenceResultBox = document.createElement("div");
-  fenceResultBox.className = "result-box";
-  fenceResultBox.innerHTML = `
-    <h2>Fence Cost Estimation</h2>
-    <p>Total Square Footage: <span id="fence-sqft"></span></p>
-    <p>Cost of Material: $<span id="fence-material-cost"></span></p>
-    <p>Suggested Fence Cost: $<span id="fence-suggested-cost"></span></p>
-  `;
-  fenceRightCol.appendChild(fenceResultBox);
-
-  fenceCalcBox.appendChild(fenceLeftCol);
-  fenceCalcBox.appendChild(fenceRightCol);
-  document.body.appendChild(fenceCalcBox);
-
+  container.appendChild(leftCol);
+  container.appendChild(rightCol);
+  document.body.appendChild(container);
 }
+
 
 
 
