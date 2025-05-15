@@ -11,15 +11,15 @@ document.addEventListener("DOMContentLoaded", async function () {
   document.body.insertBefore(nav, document.body.firstChild);
   console.log("Navigation element appended to the body");
 
-  // Add parent "Calculators" tab
-  const parentTab = { id: "calculators-tab", name: "Calculators" };
-  let parentNavItem = document.createElement("li");
-  let parentNavLink = document.createElement("a");
-  parentNavLink.href = `#${parentTab.id}`;
-  parentNavLink.innerText = parentTab.name;
-  parentNavItem.appendChild(parentNavLink);
-  navList.appendChild(parentNavItem);
-  console.log("Parent tab added to the navigation");
+  // Add "Calculators" Tab
+  const calculatorsTab = { id: "calculators-tab", name: "Calculators" };
+  let calculatorsNavItem = document.createElement("li");
+  let calculatorsNavLink = document.createElement("a");
+  calculatorsNavLink.href = `#${calculatorsTab.id}`;
+  calculatorsNavLink.innerText = calculatorsTab.name;
+  calculatorsNavItem.appendChild(calculatorsNavLink);
+  navList.appendChild(calculatorsNavItem);
+  console.log("Calculators tab added to the navigation");
 
   // Add "3D Printing Tools" Tab
   const printingToolsTab = { id: "printing-tools-tab", name: "3D Printing Tools" };
