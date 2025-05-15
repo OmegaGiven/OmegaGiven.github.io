@@ -1,4 +1,4 @@
-
+document.addEventListener("DOMContentLoaded", async function () {
   // 1. Create Navigation Tab
   let nav = document.createElement("nav");
   nav.className = "tab-nav";
@@ -40,16 +40,20 @@
 
   // Load Pyodide and External Python Scripts
   async function loadPyodideAndPythonScripts() {
-    window.pyodide = await loadPyodide();
+    try {
+      window.pyodide = await loadPyodide();
 
-    const pythonScripts = ["sell_price_calculator.py", "fence_cost_calculator.py", "investment_calculator.py"];
-    for (const script of pythonScripts) {
-      const response = await fetch(script);
-      if (!response.ok) {
-        throw new Error(`Failed to load ${script}`);
+      const pythonScripts = ["sell_price_calculator.py", "fence_cost_calculator.py", "investment_calculator.py"];
+      for (const script of pythonScripts) {
+        const response = await fetch(script);
+        if (!response.ok) {
+          throw new Error(`Failed to load ${script}`);
+        }
+        const scriptText = await response.text();
+        await pyodide.runPythonAsync(scriptText);
       }
-      const scriptText = await response.text();
-      await pyodide.runPythonAsync(scriptText);
+    } catch (error) {
+      console.error("Error loading Pyodide or Python scripts:", error);
     }
   }
   await loadPyodideAndPythonScripts();
@@ -57,10 +61,13 @@
   // Dynamically load and execute calculators.js
   const script = document.createElement("script");
   script.src = "calculators.js";
+  script.onload = function () {
+    console.log("calculators.js loaded successfully");
+  };
+  script.onerror = function () {
+    console.error("Failed to load calculators.js");
+  };
   document.head.appendChild(script);
-
-
-
 
   // 3. Create Footer / Contact Info Section
   let footer = document.createElement("footer");
@@ -77,7 +84,7 @@
   gitlinkP.innerHTML =
     'Contact me at: <a href="https://github.com/OmegaGiven">GitHub</a>';
   contactDiv.appendChild(gitlinkP);
-  
+
   // Add a link to the Etsy Store
   let etsyLinkP = document.createElement("p");
   etsyLinkP.innerHTML =
@@ -86,4 +93,4 @@
 
   footer.appendChild(contactDiv);
   document.body.appendChild(footer);
-
+});
