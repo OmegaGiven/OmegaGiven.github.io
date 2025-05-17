@@ -171,9 +171,6 @@ body {
 
 /* Footer / Contact Info styling with fixed positioning */
 footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
   width: 100%;
   background-color: var(--box-bg);
   color: var(--text-color);
