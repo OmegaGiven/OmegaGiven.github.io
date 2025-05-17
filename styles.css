@@ -3,6 +3,17 @@ html {
   scroll-behavior: smooth;
 }
 
+
+a {
+  color: #40cfff; /* Brighter, more readable on dark backgrounds */
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+a:hover, a:focus {
+  color: var(--accent-color); /* Uses your existing accent color for hover */
+}
+
 /* Dark theme color variables */
 :root {
   --bg-color: #121212;
