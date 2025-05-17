@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
 
   printingToolsNavLink.addEventListener("click", function (event) {
+    console.log("Printing Tools tab clicked!");
     event.preventDefault();
     calculatorsBox.style.display = "none";
     printingToolsBox.style.display = "block";
